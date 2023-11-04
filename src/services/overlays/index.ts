@@ -5,6 +5,13 @@ import { FfmpegBuilder } from '../commandBuilder.declarations';
 import textOverlay from './textOverlay';
 import videoOrImageOverlay from './videoOrImageOverlay';
 
+
+export const assetOverlayHandlersConfig = {
+  [AssetTypes.text]: textOverlay,
+  [AssetTypes.image]: videoOrImageOverlay,
+  [AssetTypes.video]: videoOrImageOverlay,
+};
+
 export const chainOverlays = ({
   overlays,
   input,
@@ -15,10 +22,8 @@ export const chainOverlays = ({
   ffmpegBuilder: FfmpegBuilder;
 }) => {
   return overlays.reduce((lastNode, overlayAsset) => {
-    if (overlayAsset.type === AssetTypes.text) {
-      return textOverlay({ input: lastNode, overlayAsset, ffmpegBuilder });
-    }
-    return videoOrImageOverlay({
+    const overlayHandler = assetOverlayHandlersConfig[overlayAsset.type];
+    return overlayHandler({
       input: lastNode,
       overlayAsset,
       ffmpegBuilder,
