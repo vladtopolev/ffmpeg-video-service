@@ -14,6 +14,7 @@ Run this URL
     POST http://localhost:3100/video
 
 with the following body:
+``
     {
         "composition": {
             "type": "video",
@@ -52,9 +53,11 @@ with the following body:
             ]
         }
     }
-
+``
 after you should see as a response:
+``
     {
         "ok": true
     }
+``
 look at the root of project and you will see the output file after video transformations with the name `test.mp4`
